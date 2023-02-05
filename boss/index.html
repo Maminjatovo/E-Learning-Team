@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <style>
+            @font-face {
+            font-family: amboa;
+            src: url(stocky.ttf);
+            }
+            h1,h2,h3,h4,h5,h6,div,p,label,a{
+                font-family: amboa;
+            }
+            .container{
+                position: relative;
+                background-color: rgb(145, 145, 127);
+                width: 73%;
+                height: auto;
+                margin: 0 auto;
+
+            }
+            .list{
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .list-item{
+                position: relative;
+                width: 48%;
+                height: 200px;
+                background: #6c5599;
+                margin: 5px;
+            }
+            .container .list .list-item-1{
+                background-color: red;
+            }
+           .list-item-1{
+                background-color: rgb(12, 211, 95) !important;
+            }
+
+
+            @media only screen and (max-width: 768px) {
+                .container{
+                    width: 100%;
+                }
+                .list-item{
+                    width:100%
+                }
+            }
+            .modal{
+                position: fixed;
+                top: 0;
+                bottom:0;
+                left:0;
+                right: 0;
+                background-color: black;
+                z-index: 2;
+                opacity: 0.8;
+            }
+            .modal-containt{
+                position: relative;
+                opacity:1;
+                width: 50%;
+                height: 60%;
+                background-color: #fff;
+                border-radius: 5px;
+                margin: auto;
+                z-index: 4;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="list">
+                <div class="list-item list-item-1">1</div>
+                <div class="list-item">2</div>
+                <div class="list-item">3</div>
+                <div class="list-item">4</div>
+                <div class="list-item">5</div>
+                <div class="list-item">6</div>
+                <div class="list-item">7</div>
+                <div class="list-item">8</div>
+                <div class="list-item" style="width:100%;position: sticky;top:0;z-index: 1;background-color: crimson;"><h1>MIRAIKITRA</h1></div>
+                <div class="list-item">9</div>
+                <div class="list-item">
+                    <h1>P</h1>
+                </div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+                <div class="list-item">1</div>
+            </div>
+        </div>
+        <div class="modal">
+            <div class="modal-containt">
+
+            </div>
+        </div>
+    </body>
+</html>
