@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('tel_admin');
             $table->string('email_admin')->unique();
             $table->string('password_admin');
+            $table->string('photo_admin');
             $table->timestamps();
         });
     }

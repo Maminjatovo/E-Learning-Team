@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js"></script>
+  </head>
+  <body>
+    <input type="file" accept="image/*" onchange="handleImageUpload(event)">
+    <div id="output"></div>
+    <script>
+      const handleImageUpload = async event => {
+        const file = event.target.files[0];
+        const { data: { text } } = await Tesseract.recognize(file);
+        document.getElementById('output').textContent = text;
+        console.log("bonjour")
+        console.log(document.getElementById('output').textContent = text)
+      };
+    </script>
+  </body>
+</html>

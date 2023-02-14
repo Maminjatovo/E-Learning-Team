@@ -17,12 +17,12 @@ class EtudiantController extends Controller
         //return response()->json(Etudiant::all());
 
         $etudiants = Etudiant::all();
-        $etudiants->map(function ($etudiant) {     
+        $etudiants->map(function ($etudiant) {
         $etudiant->photo_etu = $this->format($etudiant->photo_etu);
-                 
+
         return $etudiant;
         });
-       
+
         return response()->json($etudiants);
     }
 
@@ -34,11 +34,11 @@ class EtudiantController extends Controller
         else{
             $path = public_path().'/images/'.$image_name;
         }
-        
-        
+
+
 /*
         $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);     
+        $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 */
         $image = Image::make($path)->resize(50, null, function ($constraint) {
@@ -71,17 +71,17 @@ class EtudiantController extends Controller
     public function store(Request $request)
     {
 
-        
+
         $request->validate([
             'nom_etu' => 'required',
             'prenom_etu' => 'required',
             'adresse_etu' => 'required',
             'telephone_etu' => 'required',
             'email_etu' => 'required',
-            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',   
-            'file' => 'nullable',        
+            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'nullable',
         ]);
-      
+
 
         if (!$request->hasFile('file') || !$request->file('file')->isValid()) {
             $imageName = null;
@@ -89,7 +89,7 @@ class EtudiantController extends Controller
             $imageName = time() . '_' . $request->photo_etu . '.' . $request->file('file')->extension();
             $request->file('file')->move(public_path('images'), $imageName);
         }
-    
+
 
         //$image = new Image;
         //$image->name = $imageName;
@@ -146,17 +146,17 @@ class EtudiantController extends Controller
     {
         //$student = Student::where('name', 'John')->first();
         $etudiant = Etudiant::where('id_etu')->firtOrFail($id_etu);
-       
+
         $request->validate([
             'nom_etu' => 'required',
             'prenom_etu' => 'required',
             'adresse_etu' => 'required',
             'telephone_etu' => 'required',
             'email_etu' => 'required',
-            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',   
-            'file' => 'nullable',        
+            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'nullable',
         ]);
-      
+
         if (!$request->hasFile('file') || !$request->file('file')->isValid()) {
             $etudiant->update(
                 [
@@ -166,7 +166,7 @@ class EtudiantController extends Controller
                     'telephone_etu' => $request->telephone_etu,
                     'email_etu' => $request->email_etu,
                     'photo_etu' => $etudiant->photo_etu,
-    
+
                 ]
             );
         } else {
@@ -174,7 +174,7 @@ class EtudiantController extends Controller
             $request->file('file')->move(public_path('images'), $imageName);
             if(!is_null($etudiant->photo_etu)){
                 unlink(public_path('/images/'.$etudiant->photo_etu));
-            } 
+            }
             $etudiant->update(
                 [
                     'nom_etu' => $request->nom_etu,
@@ -182,10 +182,10 @@ class EtudiantController extends Controller
                     'adresse_etu' => $request->adresse_etu,
                     'telephone_etu' => $request->telephone_etu,
                     'email_etu' => $request->email_etu,
-                    'photo_etu' => $imageName,   
+                    'photo_etu' => $imageName,
                 ]
             );
-            
+
         }
         $etudiant->photo_etu = $this->format($etudiant->photo_etu);
         return response()->json($etudiant);
@@ -203,7 +203,7 @@ class EtudiantController extends Controller
         $etudiant = Etudiant::where('id_etu')->firtdOrFail($id_etu);
         if(!is_null($etudiant->photo_etu)){
             unlink(public_path('/images/'.$etudiant->photo_etu));
-        }      
+        }
         $etudiant->delete();
         return response()->json(null, 204);
     }

@@ -16,10 +16,10 @@ class EnseignantController extends Controller
     public function index()
     {
         $ensignants = Ensignant::all();
-        $ensignants->map(function ($ensignant) {     
-        $ensignant->photo_ens = $this->format($ensignant->photo_ens);                
+        $ensignants->map(function ($ensignant) {
+        $ensignant->photo_ens = $this->format($ensignant->photo_ens);
         return $ensignant;
-        });    
+        });
         return response()->json($ensignants);
     }
 
@@ -46,12 +46,12 @@ class EnseignantController extends Controller
             'prenom_ens' => 'required',
             'adresse_ens' => 'required',
             'telephone_ens' => 'required',
-            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',   
-            'photo_ens' => 'nullable',  
+            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo_ens' => 'nullable',
             'specialite_ens' => 'required',
-            'email_ens' => 'required',   
+            'email_ens' => 'required',
         ]);
-      
+
 
         if (!$request->hasFile('photo_ens') || !$request->file('photo_ens')->isValid()) {
             $imageName = null;
@@ -59,7 +59,7 @@ class EnseignantController extends Controller
             $imageName = time() . '_' . $request->nom_photo_ens . '.' . $request->file('photo_ens')->extension();
             $request->file('photo_ens')->move(public_path('images'), $imageName);
         }
-    
+
 
         //$image = new Image;
         //$image->name = $imageName;
@@ -115,18 +115,18 @@ class EnseignantController extends Controller
     public function update(Request $request, $id)
     {
         $enseignant = Ensignant::where('id_ens', '=', $id);
-       
+
         $request->validate([
             'nom_ens' => 'required',
             'prenom_ens' => 'required',
             'adresse_ens' => 'required',
             'telephone_ens' => 'required',
-            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',   
+            //'file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'photo_ens' => 'nullable',
-            'specialite_ens' =>   'required',   
+            'specialite_ens' =>   'required',
             'email_ens' => 'required',
         ]);
-      
+
         if (!$request->hasFile('photo_ens') || !$request->file('photo_ens')->isValid()) {
             $enseignant->update(
                 [
@@ -144,19 +144,19 @@ class EnseignantController extends Controller
             $request->file('photo_ens')->move(public_path('images'), $imageName);
             if(!is_null($enseignant->firstOrFail()->photo_ens)){
                 unlink(public_path('/images/'.$enseignant->firstOrFail()->photo_ens));
-            } 
+            }
             $enseignant->update(
                 [
                     'nom_ens' => $request->nom_ens,
                     'prenom_ens' => $request->prenom_ens,
                     'adresse_ens' => $request->adresse_ens,
                     'telephone_ens' => $request->telephone_ens,
-                    'photo_ens' => $imageName,   
+                    'photo_ens' => $imageName,
                     'specialite_ens' => $request->specialite_ens,
                     'email_ens' => $request->email_ens,
                 ]
             );
-            
+
         }
         $enseignant->firstOrFail()->photo_ens = $this->format($enseignant->firstOrFail()->photo_ens);
         return response()->json($enseignant->firstOrFail());
@@ -173,7 +173,7 @@ class EnseignantController extends Controller
         $enseignant = Ensignant::where('id_ens', '=', $id);
         if(!is_null($enseignant->firstOrFail()->photo_ens)){
             unlink(public_path('/images/'.$enseignant->firstOrFail()->photo_ens));
-        }      
+        }
         $enseignant->delete();
         return response()->json(null, 204);
     }
@@ -186,11 +186,11 @@ class EnseignantController extends Controller
         else{
             $path = public_path().'/images/'.$image_name;
         }
-        
-        
+
+
 /*
         $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);     
+        $data = file_get_contents($path);
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
 */
         $image = Image::make($path)->resize(50, null, function ($constraint) {
